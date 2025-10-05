@@ -20,6 +20,7 @@ controllers/.DS_Store
 controllers/__pycache__/
 envs/.DS_Store
 envs/__pycache__/
+envs/animarl/archive/
 learners/.DS_Store
 learners/__pycache__/
 modules/.DS_Store
