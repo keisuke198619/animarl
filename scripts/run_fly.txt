@@ -1,0 +1,136 @@
+fly ------------------------------------------------------
+BC
+DQN_RNN
+DQN_RNN_DIL
+
+# sbatch -p meti -w divo <<EOF
+
+cd /home/fujii/workspace3/work/AniMARL-dev
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_BC_1_94.sh > ./log/fly/res_fly_BC_1_94.log 2>&1 &
+./scripts/fly/run_fly_BC_2_94.sh > ./log/fly/res_fly_BC_2_94.log 2>&1 &
+./scripts/fly/run_fly_BC_3_94.sh > ./log/fly/res_fly_BC_3_94.log 2>&1 &
+./scripts/fly/run_fly_BC_4_94.sh > ./log/fly/res_fly_BC_4_94.log 2>&1 &
+./scripts/fly/run_fly_BC_5_94.sh > ./log/fly/res_fly_BC_5_94.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_RNN_1_94.sh > ./log/fly/res_fly_DQN_RNN_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_2_94.sh > ./log/fly/res_fly_DQN_RNN_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_3_94.sh > ./log/fly/res_fly_DQN_RNN_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_4_94.sh > ./log/fly/res_fly_DQN_RNN_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_5_94.sh > ./log/fly/res_fly_DQN_RNN_5_94.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w aventador <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_RNN_AAS_1_94.sh > ./log/fly/res_fly_DQN_RNN_AAS_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_AAS_2_94.sh > ./log/fly/res_fly_DQN_RNN_AAS_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_AAS_3_94.sh > ./log/fly/res_fly_DQN_RNN_AAS_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_AAS_4_94.sh > ./log/fly/res_fly_DQN_RNN_AAS_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_AAS_5_94.sh > ./log/fly/res_fly_DQN_RNN_AAS_5_94.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_RNN_DIL_1_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_2_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_3_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_4_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_5_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_5_94.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_RNN_DIL_wo_offline_1_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_wo_offline_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_wo_offline_2_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_wo_offline_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_wo_offline_3_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_wo_offline_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_wo_offline_4_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_wo_offline_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_wo_offline_5_94.sh > ./log/fly/res_fly_DQN_RNN_DIL_wo_offline_5_94.log 2>&1 &
+wait
+EOF
+
+
+---------------------------------
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_RNN_DIL_1_74.sh > ./log/fly/res_fly_DQN_RNN_DIL_1_74.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_2_74.sh > ./log/fly/res_fly_DQN_RNN_DIL_2_74.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_3_74.sh > ./log/fly/res_fly_DQN_RNN_DIL_3_74.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_4_74.sh > ./log/fly/res_fly_DQN_RNN_DIL_4_74.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_5_74.sh > ./log/fly/res_fly_DQN_RNN_DIL_5_74.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_RNN_DIL_1_54.sh > ./log/fly/res_fly_DQN_RNN_DIL_1_54.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_2_54.sh > ./log/fly/res_fly_DQN_RNN_DIL_2_54.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_3_54.sh > ./log/fly/res_fly_DQN_RNN_DIL_3_54.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_4_54.sh > ./log/fly/res_fly_DQN_RNN_DIL_4_54.log 2>&1 &
+./scripts/fly/run_fly_DQN_RNN_DIL_5_54.sh > ./log/fly/res_fly_DQN_RNN_DIL_5_54.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_BC_MLP_1_94.sh > ./log/fly/res_fly_BC_MLP_1_94.log 2>&1 &
+./scripts/fly/run_fly_BC_MLP_2_94.sh > ./log/fly/res_fly_BC_MLP_2_94.log 2>&1 &
+./scripts/fly/run_fly_BC_MLP_3_94.sh > ./log/fly/res_fly_BC_MLP_3_94.log 2>&1 &
+./scripts/fly/run_fly_BC_MLP_4_94.sh > ./log/fly/res_fly_BC_MLP_4_94.log 2>&1 &
+./scripts/fly/run_fly_BC_MLP_5_94.sh > ./log/fly/res_fly_BC_MLP_5_94.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_1_94.sh > ./log/fly/res_fly_DQN_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_2_94.sh > ./log/fly/res_fly_DQN_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_3_94.sh > ./log/fly/res_fly_DQN_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_4_94.sh > ./log/fly/res_fly_DQN_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_5_94.sh > ./log/fly/res_fly_DQN_5_94.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_DIL_1_94.sh > ./log/fly/res_fly_DQN_DIL_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_2_94.sh > ./log/fly/res_fly_DQN_DIL_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_3_94.sh > ./log/fly/res_fly_DQN_DIL_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_4_94.sh > ./log/fly/res_fly_DQN_DIL_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_5_94.sh > ./log/fly/res_fly_DQN_DIL_5_94.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_AAS_1_94.sh > ./log/fly/res_fly_DQN_AAS_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_AAS_2_94.sh > ./log/fly/res_fly_DQN_AAS_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_AAS_3_94.sh > ./log/fly/res_fly_DQN_AAS_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_AAS_4_94.sh > ./log/fly/res_fly_DQN_AAS_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_AAS_5_94.sh > ./log/fly/res_fly_DQN_AAS_5_94.log 2>&1 &
+wait
+EOF
+
+---------------------------------
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/fly/run_fly_DQN_DIL_wo_offline_1_94.sh > ./log/fly/res_fly_DQN_DIL_wo_offline_1_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_wo_offline_2_94.sh > ./log/fly/res_fly_DQN_DIL_wo_offline_2_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_wo_offline_3_94.sh > ./log/fly/res_fly_DQN_DIL_wo_offline_3_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_wo_offline_4_94.sh > ./log/fly/res_fly_DQN_DIL_wo_offline_4_94.log 2>&1 &
+./scripts/fly/run_fly_DQN_DIL_wo_offline_5_94.sh > ./log/fly/res_fly_DQN_DIL_wo_offline_5_94.log 2>&1 &
+wait
+EOF

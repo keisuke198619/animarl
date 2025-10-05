@@ -1,0 +1,27 @@
+env: animarl_bat # file name of .py 
+
+env_args:
+  n_agents: 1
+  time_limit: 602
+  time_step: 0
+  obs_dim: 6 
+  state_dim: 6 
+  space_dim: 3
+  reward_dim: 1 
+  env_name: "animarl_bat" # scenario
+  stacked: False
+  representation: "simple"
+  rewards: "fly"
+  logdir: "animarl_bat_dumps"
+  number_of_opponents_controls: 0
+  number_of_opponents: 0
+  seed: 0
+
+batch_size: 32
+test_greedy: True
+test_nepisode: 20
+test_interval: 10000
+log_interval: 10000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 10050000

@@ -1,0 +1,31 @@
+# custom
+.DS_Store
+__pycache__/
+log/*
+figures/*
+archive/*
+results/*
+videos/*
+csv_files/*
+calc/*
+slurm-*
+*.pkl
+*.gif
+
+components/.DS_Store
+components/__pycache__/
+config/.DS_Store
+config/algs/.DS_Store
+controllers/.DS_Store
+controllers/__pycache__/
+envs/.DS_Store
+envs/__pycache__/
+learners/.DS_Store
+learners/__pycache__/
+modules/.DS_Store
+modules/__pycache__/
+utils/.DS_Store
+utils/__pycache__/
+
+# Jupyter Notebook
+.ipynb_checkpoints

@@ -1,0 +1,140 @@
+silkmoth ------------------------------------------------------
+BC
+DQN_RNN
+DQN_RNN_DIL
+
+# sbatch -p meti -w divo <<EOF
+
+cd /home/fujii/workspace3/work/AniMARL-dev
+
+sbatch --gres=gpu:1 -p ubuntu -w aventador <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_BC_1.sh > ./log/silkmoth/res_silkmoth_BC_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_2.sh > ./log/silkmoth/res_silkmoth_BC_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_3.sh > ./log/silkmoth/res_silkmoth_BC_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_4.sh > ./log/silkmoth/res_silkmoth_BC_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_5.sh > ./log/silkmoth/res_silkmoth_BC_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w chiron <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_RNN_AAS_1.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_AAS_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_AAS_2.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_AAS_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_AAS_3.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_AAS_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_AAS_4.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_AAS_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_AAS_5.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_AAS_5.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w chiron <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_RNN_1.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_2.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_3.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_4.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_5.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_5.log 2>&1 &
+wait
+EOF
+
+
+-----------
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_BC_MLP_1.sh > ./log/silkmoth/res_silkmoth_BC_MLP_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_MLP_2.sh > ./log/silkmoth/res_silkmoth_BC_MLP_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_MLP_3.sh > ./log/silkmoth/res_silkmoth_BC_MLP_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_MLP_4.sh > ./log/silkmoth/res_silkmoth_BC_MLP_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_BC_MLP_5.sh > ./log/silkmoth/res_silkmoth_BC_MLP_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_AAS_1.sh > ./log/silkmoth/res_silkmoth_DQN_AAS_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_AAS_2.sh > ./log/silkmoth/res_silkmoth_DQN_AAS_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_AAS_3.sh > ./log/silkmoth/res_silkmoth_DQN_AAS_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_AAS_4.sh > ./log/silkmoth/res_silkmoth_DQN_AAS_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_AAS_5.sh > ./log/silkmoth/res_silkmoth_DQN_AAS_5.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w chiron <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_1.sh > ./log/silkmoth/res_silkmoth_DQN_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_2.sh > ./log/silkmoth/res_silkmoth_DQN_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_3.sh > ./log/silkmoth/res_silkmoth_DQN_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_4.sh > ./log/silkmoth/res_silkmoth_DQN_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_5.sh > ./log/silkmoth/res_silkmoth_DQN_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w chiron <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_DIL_1.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_2.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_3.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_4.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_5.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_DIL_wo_offline_1.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_wo_offline_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_wo_offline_2.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_wo_offline_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_wo_offline_3.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_wo_offline_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_wo_offline_4.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_wo_offline_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_DIL_wo_offline_5.sh > ./log/silkmoth/res_silkmoth_DQN_DIL_wo_offline_5.log 2>&1 &
+wait
+EOF
+
+
+
+-----------
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_1.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_2.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_3.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_4.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_5.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_wo_offline_1.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_wo_offline_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_wo_offline_2.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_wo_offline_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_wo_offline_3.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_wo_offline_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_wo_offline_4.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_wo_offline_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_wo_offline_5.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_wo_offline_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w chiron <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF2_1.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF2_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF2_2.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF2_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF2_3.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF2_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF2_4.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF2_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF2_5.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF2_5.log 2>&1 &
+wait
+EOF
+
+----------
+# pretrain, not used
+sbatch --gres=gpu:1 -p ubuntu -w aventador <<EOF
+#!/bin/bash
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF_1.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF_1.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF_2.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF_2.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF_3.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF_3.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF_4.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF_4.log 2>&1 &
+./scripts/silkmoth/run_silkmoth_DQN_RNN_DIL_CF_5.sh > ./log/silkmoth/res_silkmoth_DQN_RNN_DIL_CF_5.log 2>&1 &
+wait
+EOF
+

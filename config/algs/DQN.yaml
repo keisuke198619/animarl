@@ -1,0 +1,39 @@
+# --- DQN specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.01 # 05
+epsilon_start_finetune: 0.1 # 0.01
+epsilon_finish_finetune: 0.01
+epsilon_anneal_time: 50000 
+
+runner: "episode"
+
+buffer_size: 5000
+
+# update the target network every {} episodes
+target_update_interval: 2000 # 200
+
+# use the Q_Learner to train
+agent_output_type: "q"
+learner: "QLearner"
+double_q: True
+mixer: None
+# mixing_embed_dim: 32 
+# hypernet_layers: 2
+# hypernet_embed: 64
+
+# on_policy_batch: 16
+# predict_epoch: 25
+# predict_net_dim: 128
+
+#beta1: 0.5
+#beta2: 1.0
+#beta: 0.05
+ifaver: False # True
+ifon_sample: False
+ifaddobs: False # True
+alpha: 0.3
+
+name: "DQN"

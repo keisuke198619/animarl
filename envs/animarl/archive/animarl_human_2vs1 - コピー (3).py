@@ -1,0 +1,324 @@
+from .. import MultiAgentEnv
+import argparse
+import gym
+import numpy as np
+from utils.utils_chase import *
+import torch
+from torch import nn, optim
+from modules.agents.mlp_agent import MLPAgent
+
+class Animarl_Human_2vs1(MultiAgentEnv):
+    def __init__(
+        self,
+        render=False,
+        n_agents=2,
+        time_limit=300,
+        time_step=0,
+        obs_dim=18, # 12
+        env_name='animarl_human_2vs1',
+        stacked=False,
+        representation="simple",
+        rewards='touch',
+        logdir='animarl_human_dumps',
+        write_video=False,
+        transition=False,
+        args=None,
+        number_of_preys_controls=0,#1,
+        number_of_preys=1,
+        seed=0,
+        action_dim=13,
+        state_dim=12,
+        space_dim=2,
+        reward_dim=2, #3
+        speed_pursuer=[3.0,3.4], speed_evader=[2.8,3.2], mass_pursuer1=1, mass_pursuer2=1,  mass_evader=1, 
+        damping=[0.1,0.4], dt=0.1, reward_share=False # (default) damping=0.25 speed_pursuer=4.2/2.4/2.0, speed_evader=3.0/3.0/2.5
+    ):
+        self.render = render
+        self.n_agents = n_agents
+        self.episode_limit = time_limit
+        self.time_step = time_step
+        self.obs_dim = obs_dim
+        self.env_name = env_name
+        self.stacked = stacked
+        self.representation = representation
+        self.rewards = rewards
+        self.logdir = logdir
+        self.write_video = write_video
+        self.number_of_preys_controls = number_of_preys_controls
+        self.seed = seed
+        self.number_of_preys=number_of_preys
+        # self.batch_size_run = 8
+        
+        self.n_all_agents = 3
+        self.n_mate = self.n_all_agents -number_of_preys
+        self.n_adv = number_of_preys
+
+        self.speed_p1 = speed_pursuer
+        self.speed_p2 = speed_pursuer
+        self.speed_e = speed_evader
+        self.mass_p1 = mass_pursuer1
+        self.mass_p2 = mass_pursuer2
+        self.mass_e = mass_evader
+        self.damping = damping
+        self.dt = dt
+        self.reward_share = reward_share
+        self.state_dim = state_dim
+        self.reward_dim = reward_dim
+        self.space_dim = space_dim
+
+        self.SAC = args.SAC
+        if self.SAC:
+            action_dim = args.action_dim
+
+        self.action_space = [gym.spaces.Discrete(
+            action_dim) for _ in range(self.n_agents)]
+
+        self.n_actions = self.action_space[0].n
+        self.unit_dim = self.obs_dim  # QPLEX unit_dim for cds_gfootball
+        
+        self.transition = transition
+        
+
+    def get_simple_obs(self, index=-1):
+
+        if index == -1:
+            simple_obs = self.state[None]         
+
+        else:
+            simple_obs = self.obs[index]
+        
+        return simple_obs
+
+    def get_global_state(self):
+        return self.get_simple_obs(-1)
+
+
+    def step(self, actions):
+        """Returns reward, terminated, info."""
+        self.time_step += 1
+        # Q_learning = False
+
+        action_p1, action_p2, action_e = actions.detach().to('cpu').numpy().tolist()
+
+        params = {
+            'mass_p1': self.mass_p1,
+            'speed_p1': self.speed_p1,
+            'damping': self.damping,
+            'dt': self.dt,
+            'mass_p2': self.mass_p2,
+            'speed_p2': self.speed_p2,
+            'mass_e': self.mass_e,
+            'speed_e': self.speed_e,
+            'n_mate': self.n_mate,
+            'n_adv': self.n_adv
+        }
+
+        state_p1, state_p2, state_e = transition_agent(self.state, action_p1, action_p2, action_e, params)
+        '''
+        pos_p1,vel_p1,pos_p2,vel_p2,pos_e,vel_e = \
+            self.state[:2],self.state[2:4],self.state[4:6],self.state[6:8],self.state[8:10],self.state[10:12]     
+        
+        abs_u_p1 = get_abs_u(action_p1, pos_p1, pos_e)
+        next_pos_p1, next_vel_p1 = get_next_own_state(pos_p1, vel_p1, abs_u_p1, \
+                                                    self.mass_p1, self.speed_p1, self.damping, self.dt) 
+
+        abs_u_p2 = get_abs_u(action_p2, pos_p2, pos_e)
+        next_pos_p2, next_vel_p2 = get_next_own_state(pos_p2, vel_p2, abs_u_p2, \
+                                                    self.mass_p2, self.speed_p2, self.damping, self.dt) 
+        
+        state_adv = [pos_e, pos_p1, vel_p1, pos_p2, vel_p2]
+        pos_adv1, _, _, _ = get_order_adv(state_adv,self.n_mate,self.n_adv)      
+        abs_u_e = get_abs_u(action_e, pos_e, pos_adv1)
+        next_pos_e, next_vel_e = get_next_own_state(pos_e, vel_e, abs_u_e, \
+                                                    self.mass_e, self.speed_e, self.damping, self.dt)
+        
+        state_p1 = [next_pos_p1, next_vel_p1, next_pos_p2, next_vel_p2, next_pos_e, next_vel_e]
+        state_p2 = [next_pos_p2, next_vel_p2, next_pos_p1, next_vel_p1, next_pos_e, next_vel_e]
+        state_e = [next_pos_e, next_vel_e, next_pos_p1, next_vel_p1, next_pos_p2, next_vel_p2]
+        '''
+        
+        next_obs_p1 = get_obs_p(state_p1,self.n_mate,self.n_adv)
+        next_obs_p2 = get_obs_p(state_p2,self.n_mate,self.n_adv)
+        next_obs_e = get_obs_e(state_e,self.n_mate,self.n_adv)
+
+        reward_p1 = self.get_reward_pursuer(next_pos_p1, next_pos_p2, next_pos_e, self.reward_share)
+        reward_p2 = self.get_reward_pursuer(next_pos_p2, next_pos_p1, next_pos_e, self.reward_share)
+        reward_e = self.get_reward_evader(next_pos_e, next_pos_p1, next_pos_p2)
+
+        done = self.get_done(next_pos_e, next_pos_p1, next_pos_p2, self.time_step, self.episode_limit)
+        
+        self.state = np.concatenate([next_pos_p1,next_vel_p1,next_pos_p2,next_vel_p2,next_pos_e,next_vel_e],0)  
+        self.obs = np.concatenate([next_obs_p1,next_obs_p2,next_obs_e],0) 
+
+        reward = np.array([reward_p1, reward_p2, reward_e]) 
+
+        if self.time_step >= self.episode_limit:
+            infos = {'touch_reward': reward, "episode_limit": True}
+        else:
+            infos = {'touch_reward': reward}
+        # if self.time_step == 2:
+        #import pdb; pdb.set_trace()
+        return reward, done, infos
+
+    def get_obs(self):
+        """Returns all agent observations in a list."""
+        # obs = np.array([self.get_simple_obs(i) for i in range(self.n_agents)])
+        obs = [self.get_simple_obs(i) for i in range(self.n_agents)]
+        return obs
+
+    def get_obs_agent(self, agent_id):
+        """Returns observation for agent_id."""
+        return self.get_simple_obs(agent_id)
+
+    def get_obs_size(self):
+        """Returns the size of the observation."""
+        return self.obs_dim
+
+    def get_state(self):
+        """Returns the global state."""
+        return self.get_global_state()
+
+    def get_state_size(self):
+        """Returns the size of the global state."""
+        return self.state_dim
+
+    def get_avail_actions(self):
+        """Returns the available actions of all agents in a list."""
+        # if self.batch_size_run == 1:
+        return [[1 for _ in range(self.n_actions)] for agent_id in range(self.n_agents)]
+        #else:
+        #    return [[[1 for _ in range(self.n_actions)] for agent_id in range(self.n_agents)] for _ in range(self.batch_size_run)]
+
+    def get_avail_agent_actions(self, agent_id):
+        """Returns the available actions for agent_id."""
+        return self.get_avail_actions()[agent_id]
+
+    def get_total_actions(self):
+        """Returns the total number of actions an agent could ever take."""
+        return self.action_space[0].n
+
+    def reset(self,initial=None):
+        """Returns initial observations and states."""
+        self.time_step = 0
+        #self.env.reset() 
+        #obs = np.array([self.get_simple_obs(i) for i in range(self.n_agents)])
+        if initial is not None:
+            pos_p1 = initial[:2]
+            vel_p1 = initial[2:4]
+            pos_p2 = initial[4:6]
+            vel_p2 = initial[6:8]
+            pos_e = initial[8:10]
+            vel_e = initial[10:12]
+
+        else:
+            pos_p1 = np.random.uniform(-0.5, 0.5, 2)
+            vel_p1 = np.zeros(2)
+            pos_p2 = np.random.uniform(-0.5, 0.5, 2)
+            vel_p2 = np.zeros(2)
+            pos_e = np.random.uniform(-0.5, 0.5, 2)
+            vel_e = np.zeros(2)
+        
+
+        state_p1 = [pos_p1, vel_p1, pos_p2, vel_p2, pos_e, vel_e]
+        state_p2 = [pos_p2, vel_p2, pos_p1, vel_p1, pos_e, vel_e]
+        state_e = [pos_e, vel_e, pos_p1, vel_p1, pos_p2, vel_p2]
+
+        obs = get_obs_p(state_p1,self.n_mate,self.n_adv) # obs_p1
+        obs = np.concatenate([obs,get_obs_p(state_p2,self.n_mate,self.n_adv)],0) # obs_p2
+        obs = np.concatenate([obs,get_obs_e(state_e,self.n_mate,self.n_adv)],0) # obs_e
+
+        self.state = np.concatenate([pos_p1,vel_p1,pos_p2,vel_p2,pos_e,vel_e],0)  
+        self.obs = obs
+        return self.obs, self.state # 4*18,12
+
+    def render(self):
+        pass
+
+    def close(self):
+        self.env.close()
+
+    def seed(self):
+        pass
+
+    def save_replay(self):
+        """Save a replay."""
+        pass
+
+    '''def get_abs_u(self, action, abs_own_pos, abs_adv_pos, para_speed, sign=1):
+        if sign == 1:
+            th_stop = 0.9
+        elif sign == -1:
+            th_stop = 0.9
+
+        if np.abs(action[0]) < th_stop:
+            action0 = action[0]/th_stop # rescaling 
+            mean_speed = (para_speed[0]+para_speed[1])/2
+            range_speed = np.abs(para_speed[1]) - mean_speed
+            speed = mean_speed + action0*range_speed
+
+            if sign == 1:
+                ang = action[1] * np.pi/2 # [-pi/2 pi/2] (previous: action * -np.pi / 6)
+            elif sign == -1: # need to modify when the opposite direction
+                ang = action[1] * np.pi/2 + np.pi # [pi 3*pi/2]
+
+            sub_u = [np.cos(ang), np.sin(ang)]            
+            abs_u = speed*rotate_u(sub_u, abs_own_pos, abs_adv_pos)
+        else:
+            abs_u = [0, 0]
+    
+        return abs_u
+
+    def get_next_own_state(self, abs_pos_own, abs_vel_own, abs_u, mass, var_damping, para_damping, dt):
+        abs_acc_own = np.array(abs_u) / mass
+        mean_damping = (para_damping[0]+para_damping[1])/2
+        range_damping = para_damping[1] - mean_damping
+        damping = mean_damping + var_damping*range_damping
+
+        next_abs_vel_own = abs_vel_own * (1 - damping) + abs_acc_own * dt
+        next_abs_pos_own = abs_pos_own + next_abs_vel_own * dt
+        return next_abs_pos_own, next_abs_vel_own'''
+
+    def get_reward_pursuer(self, abs_pos_own, abs_pos_mate, abs_pos_adv, reward_share):
+        dist1 = get_dist(abs_pos_own, abs_pos_adv)
+        dist2 = get_dist(abs_pos_mate, abs_pos_adv)
+        reward = 0
+
+        if reward_share == True:
+            if dist1 < 0.1 or dist2 < 0.1:
+                reward = 1
+            elif abs_pos_own[0] < -1 or abs_pos_own[1] < -1 or abs_pos_own[0] > 1 or abs_pos_own[1] > 1:
+                reward = -10
+        elif reward_share == False:
+            if dist1 < 0.1:
+                reward = 1
+            elif abs_pos_own[0] < -1 or abs_pos_own[1] < -1 or abs_pos_own[0] > 1 or abs_pos_own[1] > 1:
+                reward = -10
+
+        return reward
+
+
+    def get_reward_evader(self, abs_pos_own, abs_pos_adv1, abs_pos_adv2):
+        dist1 = get_dist(abs_pos_own, abs_pos_adv1)
+        dist2 = get_dist(abs_pos_own, abs_pos_adv2)
+        reward = 0
+
+        if dist1 < 0.1 or dist2 < 0.1:
+            reward = -1
+        elif abs_pos_own[0] < -1 or abs_pos_own[1] < -1 or abs_pos_own[0] > 1 or abs_pos_own[1] > 1:
+            reward = -10
+
+        return reward
+
+    def get_done(self, abs_pos_own, abs_pos_adv1, abs_pos_adv2, num_step, max_step):
+        dist1 = get_dist(abs_pos_own, abs_pos_adv1)
+        dist2 = get_dist(abs_pos_own, abs_pos_adv2)
+
+        if dist1 < 0.1 or dist2 < 0.1 or num_step > max_step or  \
+        abs_pos_own[0] < -1 or abs_pos_own[1] < -1 or abs_pos_own[0] > 1 or abs_pos_own[1] > 1 or \
+        abs_pos_adv1[0] < -1 or abs_pos_adv1[1] < -1 or abs_pos_adv1[0] > 1 or abs_pos_adv1[1] > 1 or \
+        abs_pos_adv2[0] < -1 or abs_pos_adv2[1] < -1 or abs_pos_adv2[0] > 1 or abs_pos_adv2[1] > 1:
+            done = True
+        else:
+            done = False
+
+        return done

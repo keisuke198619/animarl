@@ -1,0 +1,191 @@
+Chase-escape:
+BC
+DQN
+DQN_RNN
+DQN_AAS
+DQN_RNN_AAS
+DQN_DIL
+DQN_RNN_DIL
+
+# sbatch -p meti -w divo <<EOF
+
+cd /home/fujii/workspace3/work/AniMARL-dev
+
+agent ------------------------------------------------------
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_BC_1.sh > ./log/agent/res_agent_BC_1.log 2>&1 &
+./scripts/agent/run_agent_BC_2.sh > ./log/agent/res_agent_BC_2.log 2>&1 &
+./scripts/agent/run_agent_BC_3.sh > ./log/agent/res_agent_BC_3.log 2>&1 &
+./scripts/agent/run_agent_BC_4.sh > ./log/agent/res_agent_BC_4.log 2>&1 &
+./scripts/agent/run_agent_BC_5.sh > ./log/agent/res_agent_BC_5.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_1.sh > ./log/agent/res_agent_DQN_RNN_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_2.sh > ./log/agent/res_agent_DQN_RNN_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_3.sh > ./log/agent/res_agent_DQN_RNN_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_4.sh > ./log/agent/res_agent_DQN_RNN_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_5.sh > ./log/agent/res_agent_DQN_RNN_5.log 2>&1 &
+wait
+EOF
+
+
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_AAS_1.sh > ./log/agent/res_agent_DQN_RNN_AAS_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_AAS_2.sh > ./log/agent/res_agent_DQN_RNN_AAS_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_AAS_3.sh > ./log/agent/res_agent_DQN_RNN_AAS_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_AAS_4.sh > ./log/agent/res_agent_DQN_RNN_AAS_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_AAS_5.sh > ./log/agent/res_agent_DQN_RNN_AAS_5.log 2>&1 &
+wait
+EOF
+
+(MLP, not used) ------------------------------------------------------
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_1.sh > ./log/agent/res_agent_DQN_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_2.sh > ./log/agent/res_agent_DQN_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_3.sh > ./log/agent/res_agent_DQN_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_4.sh > ./log/agent/res_agent_DQN_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_5.sh > ./log/agent/res_agent_DQN_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_AAS_1.sh > ./log/agent/res_agent_DQN_AAS_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_AAS_2.sh > ./log/agent/res_agent_DQN_AAS_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_AAS_3.sh > ./log/agent/res_agent_DQN_AAS_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_AAS_4.sh > ./log/agent/res_agent_DQN_AAS_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_AAS_5.sh > ./log/agent/res_agent_DQN_AAS_5.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_DIL_1.sh > ./log/agent/res_agent_DQN_DIL_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_2.sh > ./log/agent/res_agent_DQN_DIL_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_3.sh > ./log/agent/res_agent_DQN_DIL_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_4.sh > ./log/agent/res_agent_DQN_DIL_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_5.sh > ./log/agent/res_agent_DQN_DIL_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_1_100.sh > ./log/agent/res_agent_DQN_RNN_DIL_1_100.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_2_100.sh > ./log/agent/res_agent_DQN_RNN_DIL_2_100.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_3_100.sh > ./log/agent/res_agent_DQN_RNN_DIL_3_100.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_4_100.sh > ./log/agent/res_agent_DQN_RNN_DIL_4_100.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_5_100.sh > ./log/agent/res_agent_DQN_RNN_DIL_5_100.log 2>&1 &
+wait
+EOF
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_1_50.sh > ./log/agent/res_agent_DQN_RNN_DIL_1_50.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_2_50.sh > ./log/agent/res_agent_DQN_RNN_DIL_2_50.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_3_50.sh > ./log/agent/res_agent_DQN_RNN_DIL_3_50.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_4_50.sh > ./log/agent/res_agent_DQN_RNN_DIL_4_50.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_5_50.sh > ./log/agent/res_agent_DQN_RNN_DIL_5_50.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_DIL_wo_offline_1.sh > ./log/agent/res_agent_DQN_DIL_wo_offline_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_wo_offline_2.sh > ./log/agent/res_agent_DQN_DIL_wo_offline_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_wo_offline_3.sh > ./log/agent/res_agent_DQN_DIL_wo_offline_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_wo_offline_4.sh > ./log/agent/res_agent_DQN_DIL_wo_offline_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_wo_offline_5.sh > ./log/agent/res_agent_DQN_DIL_wo_offline_5.log 2>&1 &
+wait
+EOF
+-------
+
+
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_1.sh > ./log/agent/res_agent_DQN_RNN_DIL_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_2.sh > ./log/agent/res_agent_DQN_RNN_DIL_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_3.sh > ./log/agent/res_agent_DQN_RNN_DIL_3.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_4.sh > ./log/agent/res_agent_DQN_RNN_DIL_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_5.sh > ./log/agent/res_agent_DQN_RNN_DIL_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_wo_offline_1.sh > ./log/agent/res_agent_DQN_RNN_DIL_wo_offline_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_wo_offline_2.sh > ./log/agent/res_agent_DQN_RNN_DIL_wo_offline_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_wo_offline_3.sh > ./log/agent/res_agent_DQN_RNN_DIL_wo_offline_3.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w tesla <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_wo_offline_4.sh > ./log/agent/res_agent_DQN_RNN_DIL_wo_offline_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_wo_offline_5.sh > ./log/agent/res_agent_DQN_RNN_DIL_wo_offline_5.log 2>&1 &
+wait
+EOF
+
+sbatch --gres=gpu:1 -p ubuntu -w aventador <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_CF2_1.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF2_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF2_2.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF2_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF2_3.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF2_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF2_4.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF2_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF2_5.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF2_5.log 2>&1 &
+wait
+EOF
+
+----------
+# pretrain
+sbatch --gres=gpu:1 -p ubuntu -w aventador <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_RNN_DIL_CF_1.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF_2.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF_3.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF_4.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_RNN_DIL_CF_5.sh > ./log/agent/res_agent_DQN_RNN_DIL_CF_5.log 2>&1 &
+wait
+EOF
+
+(MLP, not used) ------------------------------------------------------
+
+sbatch --gres=gpu:1 -p ubuntu -w aventador <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_DIL_CF2_1.sh > ./log/agent/res_agent_DQN_DIL_CF2_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF2_2.sh > ./log/agent/res_agent_DQN_DIL_CF2_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF2_3.sh > ./log/agent/res_agent_DQN_DIL_CF2_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF2_4.sh > ./log/agent/res_agent_DQN_DIL_CF2_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF2_5.sh > ./log/agent/res_agent_DQN_DIL_CF2_5.log 2>&1 &
+wait
+EOF
+
+----------
+# pretrain, not used
+sbatch --gres=gpu:1 -p ubuntu -w chiron <<EOF
+#!/bin/bash
+./scripts/agent/run_agent_DQN_DIL_CF_1.sh > ./log/agent/res_agent_DQN_DIL_CF_1.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF_2.sh > ./log/agent/res_agent_DQN_DIL_CF_2.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF_3.sh > ./log/agent/res_agent_DQN_DIL_CF_3.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF_4.sh > ./log/agent/res_agent_DQN_DIL_CF_4.log 2>&1 &
+./scripts/agent/run_agent_DQN_DIL_CF_5.sh > ./log/agent/res_agent_DQN_DIL_CF_5.log 2>&1 &
+wait
+EOF

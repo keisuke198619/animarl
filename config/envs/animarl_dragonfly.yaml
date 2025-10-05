@@ -1,0 +1,27 @@
+env: animarl_dragonfly # file name of .py 
+
+env_args:
+  n_agents: 1
+  time_limit: 602
+  time_step: 0
+  obs_dim: 6 
+  state_dim: 6 
+  space_dim: 2
+  reward_dim: 1 
+  env_name: "animarl_dragonfly" # scenario
+  stacked: False
+  representation: "simple"
+  rewards: "touch"
+  logdir: "animarl_dragonfly_dumps"
+  number_of_opponents_controls: 1
+  number_of_opponents: 1
+  seed: 0
+
+batch_size: 32
+test_greedy: True
+test_nepisode: 20
+test_interval: 10000
+log_interval: 10000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 10050000

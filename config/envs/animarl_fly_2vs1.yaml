@@ -1,0 +1,27 @@
+env: animarl_fly_2vs1 # file name of .py 
+
+env_args:
+  n_agents: 3 #3
+  time_limit: 500 # 302
+  time_step: 0
+  obs_dim: 19 # 3*6+1
+  state_dim: 12 # 3*4 
+  space_dim: 2
+  reward_dim: 3 #3 
+  env_name: "animarl_fly_2vs1" # scenario
+  stacked: False
+  representation: "simple"
+  rewards: "touch"
+  logdir: "animarl_flies_dumps"
+  number_of_opponents_controls: 1 #1
+  number_of_opponents: 1
+  seed: 0
+
+batch_size: 32
+test_greedy: True
+test_nepisode: 20
+test_interval: 10000
+log_interval: 10000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 1005000 #1005000
