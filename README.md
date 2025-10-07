@@ -16,6 +16,10 @@ pip install -r requirements.txt
 * `--config` refers to the config files in `config/algs`
 * `--env-config` refers to the config files in `config/envs`
 
+### Data
+* You can download from https://drive.google.com/drive/folders/107ncNQtqyaDJOs0BIZXAmXxinvhze418?usp=sharing
+* After download, please set the folder as `AniMARL_data `at the same level of this `animarl` folder. 
+
 ### Structure
 * `components/` - Shared building blocks such as replay buffers, action selectors, and data transforms.
 * `controllers/` - High-level logic for coordinating agents during rollouts.
@@ -29,7 +33,7 @@ pip install -r requirements.txt
 * Top-level scripts such as `run.py`, `run.sh`, `learn_behavior.py`, and `learn_pretrainQ.py` provide entry points for different training and evaluation workflows.
 
 ### Main analysis
-* see `run.sh`.
+* see `run.sh` and `scripts/`.
 * dataset of animarl_human_2vs1 (artificial agents' chase-and-escape) are available.
 * Further details are documented within the code.
 
